@@ -1,72 +1,78 @@
-# PowerGrid EV Analytics Internship
+# Task 1: EV Charging Demand Forecasting
 
-This repository contains my work for the **PowerGrid EV Analytics Programme**, covering data analytics, machine learning, business intelligence, and predictive modelling tasks.
+## Objective
 
-## Module 1: Telco Customer Churn Prediction & Decision Modeling
+The objective of this task is to analyse historical EV charging demand and forecast future charging demand to support PowerGrid's capacity and operational planning.
 
-### Objective
-Predict customers who are likely to churn, identify major churn drivers, and determine an appropriate intervention threshold for customer retention campaigns.
+## Dataset
 
-### Tasks Completed
+The EV charging dataset contains historical charging session data from **2022–2024**.
 
-1. **Load & Inspect**
-   - Loaded the Telco Customer Churn dataset.
-   - Converted `TotalCharges` to numeric format.
-   - Imputed missing `TotalCharges` values.
+For this task, the `sessions` sheet was used, with:
 
-2. **Exploratory Data Analysis**
-   - Analyzed churn by contract type.
-   - Analyzed churn across tenure groups.
-   - Analyzed churn across monthly charge ranges.
+- `start_timestamp` — charging session start time
+- `energy_kwh` — energy delivered during the session
+- `station_id` — charging station identifier
+- `charger_type` — type of charger
+- `user_type` — customer category
+- `station_region` — station region
 
-3. **Preprocessing & Feature Encoding**
-   - Encoded categorical variables using one-hot encoding.
-   - Scaled numerical variables.
-   - Prepared the dataset for machine learning.
+## Data Preparation
 
-4. **Machine Learning Model Training**
-   - Trained Logistic Regression.
-   - Trained Random Forest.
-   - Compared model accuracy, precision, recall, F1-score, and confusion matrices.
+The following preprocessing steps were performed:
 
-5. **Business Decision Threshold Modeling**
-   - Evaluated multiple classification thresholds.
-   - Analyzed the precision-recall trade-off.
-   - Selected a threshold based on the highest F1-score.
+1. Loaded the `sessions` sheet from the Excel dataset.
+2. Converted `start_timestamp` to datetime format.
+3. Aggregated `energy_kwh` by day to calculate daily charging demand.
+4. Prepared the resulting time-series dataset for Prophet forecasting.
 
-### Key Results
+The resulting daily dataset contained **1,096 days** of historical demand.
 
-| Model | Accuracy |
+## Forecasting Approach
+
+### Prophet
+
+Facebook Prophet was selected as the forecasting method.
+
+Prophet was used to capture:
+
+- Overall demand trends
+- Weekly seasonality
+- Recurring demand patterns
+
+The model was trained on historical daily charging demand and used to forecast **365 days into 2025**.
+
+## Model Evaluation
+
+The last **30 days of 2024** were reserved as a test period.
+
+| Metric | Result |
 |---|---:|
-| Logistic Regression | 80.41% |
-| Random Forest | 78.64% |
+| MAPE | **8.29%** |
+| RMSE | **2,061.55 kWh** |
 
-The Logistic Regression model achieved the better accuracy and churn-class F1-score among the two models.
+The model achieved a MAPE of 8.29%, indicating reasonable forecasting performance on the 30-day test period.
 
-### Decision Threshold
+## 2025 Forecast Insights
 
-The selected threshold was **0.40**, achieving:
+- **Average predicted daily demand:** 28,353.35 kWh
+- **Forecast range:** 23,773.34 – 32,835.30 kWh
+- **Highest predicted demand:** 32,835.30 kWh on December 31, 2025
+- **Lowest predicted demand:** 23,773.34 kWh on January 4, 2025
 
-- **Precision:** 0.591
-- **Recall:** 0.676
-- **F1-score:** 0.631
+The forecast indicates an overall upward trend in EV charging demand throughout 2025, along with recurring weekly demand patterns.
 
-This threshold provides a balance between identifying potential churners and limiting unnecessary retention interventions.
+## Business Implications
 
-## Tools & Technologies
+The forecast can help PowerGrid with:
 
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- Matplotlib
-- Jupyter Notebook
-- GitHub
+- Charging infrastructure capacity planning
+- Energy requirement planning
+- Operational resource allocation
+- Maintenance scheduling
+- Preparation for periods of higher charging demand
 
-## Repository Structure
+## Files
 
-```text
-PowerGrid-EV-Analytics/
-│
-├── Module_1_Telco_Customer_Churn.ipynb
-└── README.md
+- `Task_01_EV_Demand_Forecasting.ipynb` — Complete analysis, Prophet model, evaluation, forecast and visualisations.
+- `README.md` — Task documentation and key findings.
