@@ -1,78 +1,137 @@
-# Task 1: EV Charging Demand Forecasting
+# PowerGrid EV Analytics
 
-## Objective
+## Task 1 — EV Charging Demand Forecasting
 
-The objective of this task is to analyse historical EV charging demand and forecast future charging demand to support PowerGrid's capacity and operational planning.
+### Project Overview
+
+This repository contains my individual work for the **PowerGrid EV Analytics Programme**, focusing on the application of data science and machine learning techniques to EV charging data.
+
+This submission covers **Task 1: EV Charging Demand Forecasting**, where historical EV charging session data is analysed and used to forecast future charging demand.
+
+---
+
+## Task Objective
+
+The objective of this task is to analyse historical EV charging demand and develop a time-series forecasting model to predict future charging demand, supporting capacity planning and operational decision-making.
+
+---
 
 ## Dataset
 
-The EV charging dataset contains historical charging session data from **2022–2024**.
+The analysis uses the **EV Charging Dataset**, containing charging data from **2022–2024**.
 
-For this task, the `sessions` sheet was used, with:
+The `sessions` sheet was used for the forecasting analysis.
 
-- `start_timestamp` — charging session start time
-- `energy_kwh` — energy delivered during the session
-- `station_id` — charging station identifier
-- `charger_type` — type of charger
-- `user_type` — customer category
-- `station_region` — station region
+### Key Variables
 
-## Data Preparation
+| Variable | Description |
+|---|---|
+| `start_timestamp` | Charging session start time |
+| `energy_kwh` | Energy delivered during the session |
+| `station_id` | Charging station identifier |
+| `charger_type` | Type of charging equipment |
+| `user_type` | User category |
+| `station_region` | Geographic region of the station |
 
-The following preprocessing steps were performed:
+---
 
-1. Loaded the `sessions` sheet from the Excel dataset.
-2. Converted `start_timestamp` to datetime format.
+## Methodology
+
+The analysis followed these steps:
+
+1. Loaded the EV charging session data.
+2. Converted the `start_timestamp` column to datetime format.
 3. Aggregated `energy_kwh` by day to calculate daily charging demand.
-4. Prepared the resulting time-series dataset for Prophet forecasting.
+4. Prepared the daily time-series dataset for forecasting.
+5. Split the historical data into training and testing periods.
+6. Trained a **Prophet** forecasting model.
+7. Evaluated the model using **MAPE** and **RMSE**.
+8. Generated a **365-day forecast for 2025**.
+9. Analysed the forecast results and identified key business insights.
 
-The resulting daily dataset contained **1,096 days** of historical demand.
+---
 
-## Forecasting Approach
+## Forecasting Model
 
 ### Prophet
 
-Facebook Prophet was selected as the forecasting method.
+**Prophet** was selected as the forecasting approach for this task.
 
-Prophet was used to capture:
+The model was used to capture:
 
-- Overall demand trends
+- Long-term demand trends
 - Weekly seasonality
 - Recurring demand patterns
 
-The model was trained on historical daily charging demand and used to forecast **365 days into 2025**.
+The historical dataset contained **1,096 daily observations**.
 
-## Model Evaluation
+The final **30 days of 2024** were used as the test period for model evaluation.
 
-The last **30 days of 2024** were reserved as a test period.
+---
+
+## Model Performance
 
 | Metric | Result |
 |---|---:|
 | MAPE | **8.29%** |
 | RMSE | **2,061.55 kWh** |
 
-The model achieved a MAPE of 8.29%, indicating reasonable forecasting performance on the 30-day test period.
+The Prophet model achieved a **MAPE of 8.29%** on the 30-day test period, indicating reasonable predictive performance for daily EV charging demand.
 
-## 2025 Forecast Insights
+---
 
-- **Average predicted daily demand:** 28,353.35 kWh
-- **Forecast range:** 23,773.34 – 32,835.30 kWh
-- **Highest predicted demand:** 32,835.30 kWh on December 31, 2025
-- **Lowest predicted demand:** 23,773.34 kWh on January 4, 2025
+## 2025 Forecast Results
 
-The forecast indicates an overall upward trend in EV charging demand throughout 2025, along with recurring weekly demand patterns.
+| Forecast Metric | Result |
+|---|---:|
+| Average Daily Demand | **28,353.35 kWh** |
+| Minimum Predicted Demand | **23,773.34 kWh** |
+| Maximum Predicted Demand | **32,835.30 kWh** |
+| Forecast Period | **1 January – 31 December 2025** |
+
+### Key Forecast Insights
+
+- The **highest predicted demand** is **32,835.30 kWh** on **31 December 2025**.
+- The **lowest predicted demand** is **23,773.34 kWh** on **4 January 2025**.
+- The forecast indicates an overall **upward trend in charging demand** during 2025.
+- The model captures recurring **weekly demand patterns**.
+
+---
 
 ## Business Implications
 
-The forecast can help PowerGrid with:
+The forecast can support PowerGrid in:
 
-- Charging infrastructure capacity planning
-- Energy requirement planning
-- Operational resource allocation
-- Maintenance scheduling
-- Preparation for periods of higher charging demand
+- Planning future charging infrastructure capacity
+- Estimating energy requirements
+- Allocating operational resources
+- Planning maintenance activities
+- Preparing for periods of higher charging demand
 
-## Files
+---
 
-- `Task_01_EV_Demand_Forecasting.ipynb` — Complete analysis, Prophet model, evaluation, forecast and visualisations.
-- `README.md` — Task documentation and key findings.
+## Repository Structure
+
+```text
+PowerGrid-EV-Analytics/
+│
+├── README.md
+│
+└── Task_01_EV_Demand_Forecasting.ipynb
+```
+
+---
+
+## Task Deliverable
+
+**Notebook:** `Task_01_EV_Demand_Forecasting.ipynb`
+
+The notebook contains the complete data preparation, forecasting model, model evaluation, visualisations, forecast results, and business insights for Task 1.
+
+---
+
+## Project Status
+
+**Task 1: Completed**
+
+**Overall Progress: 1 / 16 Tasks**
