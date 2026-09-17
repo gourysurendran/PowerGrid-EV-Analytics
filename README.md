@@ -223,5 +223,5 @@ Contains revenue time-series preparation, price elasticity analysis, monthly rev
 
 ```
 
-This keeps **Task 1 intact** and adds **Task 2** underneath it in the same README.
+
 ```
