@@ -1,6 +1,4 @@
-Yes. Since you want to **keep Task 1 and add Task 2 to the same root README**, replace your current README with this updated version:
 
-````markdown
 # PowerGrid EV Analytics
 
 ## Project Overview
