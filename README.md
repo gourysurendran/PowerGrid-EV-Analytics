@@ -1,4 +1,6 @@
 
+
+````markdown
 # PowerGrid EV Analytics
 
 ## Project Overview
@@ -182,6 +184,141 @@ The scenario results are based on the estimated historical relationship between 
 
 ---
 
+# Task 3 — Charger Utilisation & Efficiency Analysis
+
+## Task Objective
+
+The objective of this task is to measure charger utilisation, idle time, and peak-load patterns to identify bottleneck stations and support infrastructure capacity optimisation.
+
+## Dataset
+
+The **EV Charging Dataset (2022–2024)** was used.
+
+The `sessions` sheet was analysed to evaluate charger-level and station-level performance.
+
+### Key Variables
+
+| Variable | Description |
+|---|---|
+| `station_id` | Charging station identifier |
+| `charger_id` | Charger identifier |
+| `charger_type` | Charger type |
+| `start_timestamp` | Charging session start time |
+| `end_timestamp` | Charging session end time |
+| `session_duration_minutes` | Duration of charging session |
+| `energy_kwh` | Energy delivered |
+
+## Methodology
+
+1. Loaded and inspected the charging session data.
+2. Converted session timestamps into datetime format.
+3. Calculated charging duration in hours.
+4. Aggregated charging sessions at charger level.
+5. Calculated charger utilisation percentage.
+6. Calculated idle time and idle percentage.
+7. Analysed hourly charging load to identify peak periods.
+8. Ranked chargers according to utilisation.
+9. Created a charger utilisation heatmap.
+10. Aggregated charger performance at station level.
+11. Developed capacity optimisation recommendations.
+
+## Charger Utilisation Analysis
+
+Charger utilisation was calculated using total charging hours relative to the overall dataset period.
+
+The highest-utilisation charger was:
+
+**STN_001_CH_04 — 12.06% utilisation**
+
+Other highly utilised chargers included chargers at **STN_007** and **STN_001**.
+
+The results indicate that charger demand is not evenly distributed across the infrastructure.
+
+## Idle-Time Analysis
+
+Idle time was calculated as the difference between total available hours and total charging hours.
+
+Several chargers showed idle percentages above **99%** under the session-time-based utilisation measure, particularly some DC 150 kW and DC 300 kW chargers.
+
+This indicates that a number of chargers have relatively low observed session occupancy during the analysed period.
+
+> **Note:** Idle-time and utilisation percentages represent a session-time-based analytical measure using the overall dataset period. They should not be interpreted as direct measurements of physical charger availability.
+
+## Peak-Load Analysis
+
+Hourly charging activity was analysed using total energy consumed and number of charging sessions.
+
+The highest observed hourly energy demand occurred at:
+
+**10 AM — 1,134,524.0 kWh**
+
+Other high-load periods included:
+
+- 1 PM — 1,131,742.8 kWh
+- 2 PM — 1,131,890.0 kWh
+- 11 AM — 1,129,683.7 kWh
+- 12 PM — 1,123,218.3 kWh
+
+Overall, charging activity was relatively high during the daytime period from approximately **9 AM to 4 PM**.
+
+## Charger Performance Ranking
+
+Charger utilisation varied considerably across individual chargers.
+
+### Highest Utilisation
+
+| Rank | Station | Charger | Type | Utilisation |
+|---:|---|---|---|---:|
+| 1 | STN_001 | STN_001_CH_04 | DC_50kW | **12.06%** |
+| 2 | STN_007 | STN_007_CH_02 | DC_50kW | **12.00%** |
+| 3 | STN_007 | STN_007_CH_04 | DC_50kW | **11.98%** |
+
+### Lowest Utilisation
+
+| Station | Charger | Type | Utilisation |
+|---|---|---|---:|
+| STN_025 | STN_025_CH_02 | DC_300kW | **0.73%** |
+| STN_027 | STN_027_CH_04 | DC_300kW | **0.73%** |
+| STN_025 | STN_025_CH_03 | DC_300kW | **0.78%** |
+
+## Station Capacity Analysis
+
+Station-level analysis showed substantial variation in average charger utilisation.
+
+| Station | Chargers | Average Utilisation |
+|---|---:|---:|
+| STN_007 | 4 | **10.09%** |
+| STN_001 | 4 | **8.88%** |
+| STN_006 | 4 | **6.99%** |
+| STN_003 | 5 | **6.51%** |
+| STN_014 | 4 | **5.79%** |
+
+Stations such as **STN_025, STN_027, and STN_019** showed relatively low average utilisation.
+
+## Capacity Optimisation Recommendations
+
+Based on the analysis:
+
+1. **Monitor high-utilisation stations:** Stations such as STN_007 and STN_001 should be monitored during peak periods to identify possible congestion or capacity constraints.
+
+2. **Review low-utilisation chargers:** Chargers with consistently low utilisation should be evaluated before additional capacity is installed at the same locations.
+
+3. **Plan capacity around peak hours:** Infrastructure planning should consider the high-demand daytime period between approximately 9 AM and 4 PM.
+
+4. **Redistribute charging demand:** Where operationally feasible, users can be encouraged to use underutilised chargers or nearby stations through pricing or availability information.
+
+5. **Use charger-level monitoring:** Individual charger utilisation should be tracked regularly to identify bottlenecks and inefficient capacity allocation.
+
+## Conclusion
+
+The analysis demonstrates that charger utilisation varies considerably across stations and individual chargers.
+
+Peak charging activity is concentrated during daytime hours, while several chargers remain substantially underutilised.
+
+These findings can support data-driven infrastructure planning by identifying locations that require closer monitoring and areas where additional capacity may not currently be necessary.
+
+---
+
 # Repository Structure
 
 ```text
@@ -191,7 +328,9 @@ PowerGrid-EV-Analytics/
 │
 ├── Task_01_EV_Demand_Forecasting.ipynb
 │
-└── Task_02_Revenue_Forecasting_Price_Sensitivity.ipynb
+├── Task_02_Revenue_Forecasting_Price_Sensitivity.ipynb
+│
+└── Task_03_Charger_Utilisation_Efficiency_Analysis.ipynb
 ````
 
 ---
@@ -210,18 +349,25 @@ Contains data preparation, Prophet forecasting, model evaluation, visualisations
 
 Contains revenue time-series preparation, price elasticity analysis, monthly revenue forecasting, price scenario simulations, and executive summary.
 
+### Task 3
+
+**Notebook:** `Task_03_Charger_Utilisation_Efficiency_Analysis.ipynb`
+
+Contains charger utilisation analysis, idle-time analysis, peak-load analysis, performance ranking, utilisation heatmap, station-level capacity analysis, and capacity optimisation recommendations.
+
 ---
 
 # Project Status
 
-| Task                                             | Status      |
-| ------------------------------------------------ | ----------- |
-| Task 1 — EV Charging Demand Forecasting          | ✅ Completed |
-| Task 2 — Revenue Forecasting & Price Sensitivity | ✅ Completed |
+| Task                                               | Status      |
+| -------------------------------------------------- | ----------- |
+| Task 1 — EV Charging Demand Forecasting            | ✅ Completed |
+| Task 2 — Revenue Forecasting & Price Sensitivity   | ✅ Completed |
+| Task 3 — Charger Utilisation & Efficiency Analysis | ✅ Completed |
 
-**Overall Progress: 2 / 16 Tasks**
+**Overall Progress: 3 / 16 Tasks**
 
-```
+````
 
-
-```
+*
+````
